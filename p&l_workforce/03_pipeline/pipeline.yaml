@@ -1,0 +1,67 @@
+resources:
+  jobs:
+    New_Job_Mar_27_2026_06_36_PM:
+      name: New Job Mar 27, 2026, 06:36 PM
+      tasks:
+        - task_key: 01_nb_account
+          notebook_task:
+            notebook_path: /Workspace/Users/jaiganesh10052004@gmail.com/DE_MINI_PROJECT/p&l_workforce/01_silver/nb_trn_account
+            source: WORKSPACE
+        - task_key: 02_nb_employee
+          notebook_task:
+            notebook_path: /Workspace/Users/jaiganesh10052004@gmail.com/DE_MINI_PROJECT/p&l_workforce/01_silver/nb_trn_employee
+            source: WORKSPACE
+        - task_key: 03_nb_department
+          notebook_task:
+            notebook_path: /Workspace/Users/jaiganesh10052004@gmail.com/DE_MINI_PROJECT/p&l_workforce/01_silver/nb_trn_departments
+            source: WORKSPACE
+        - task_key: 04_nb_company
+          notebook_task:
+            notebook_path: /Workspace/Users/jaiganesh10052004@gmail.com/DE_MINI_PROJECT/p&l_workforce/01_silver/nb_trn_company
+            source: WORKSPACE
+        - task_key: 05_nb_payroll
+          notebook_task:
+            notebook_path: /Workspace/Users/jaiganesh10052004@gmail.com/DE_MINI_PROJECT/p&l_workforce/01_silver/nb_trn_payroll
+            source: WORKSPACE
+        - task_key: 06_nb_general_ledger
+          notebook_task:
+            notebook_path: /Workspace/Users/jaiganesh10052004@gmail.com/DE_MINI_PROJECT/p&l_workforce/01_silver/nb_trn_general_ledgers
+            source: WORKSPACE
+        - task_key: 01_nb_dim
+          depends_on:
+            - task_key: 05_nb_payroll
+            - task_key: 02_nb_employee
+            - task_key: 06_nb_general_ledger
+            - task_key: 01_nb_account
+            - task_key: 03_nb_department
+            - task_key: 04_nb_company
+          notebook_task:
+            notebook_path: /Workspace/Users/jaiganesh10052004@gmail.com/DE_MINI_PROJECT/p&l_workforce/02_gold/nb_dim
+            source: WORKSPACE
+        - task_key: 02_nb_fact
+          depends_on:
+            - task_key: 05_nb_payroll
+            - task_key: 02_nb_employee
+            - task_key: 06_nb_general_ledger
+            - task_key: 01_nb_account
+            - task_key: 03_nb_department
+            - task_key: 04_nb_company
+          notebook_task:
+            notebook_path: /Workspace/Users/jaiganesh10052004@gmail.com/DE_MINI_PROJECT/p&l_workforce/02_gold/nb_fact
+            source: WORKSPACE
+        - task_key: 03_nb_data_cube
+          depends_on:
+            - task_key: 01_nb_dim
+            - task_key: 02_nb_fact
+          notebook_task:
+            notebook_path: /Workspace/Users/jaiganesh10052004@gmail.com/DE_MINI_PROJECT/p&l_workforce/02_gold/nb_data_cube
+            source: WORKSPACE
+        - task_key: 04_nb_kpis
+          depends_on:
+            - task_key: 03_nb_data_cube
+          notebook_task:
+            notebook_path: /Workspace/Users/jaiganesh10052004@gmail.com/DE_MINI_PROJECT/p&l_workforce/02_gold/nb_kpis
+            source: WORKSPACE
+      queue:
+        enabled: true
+      performance_target: PERFORMANCE_OPTIMIZED
